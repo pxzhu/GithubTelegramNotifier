@@ -236,7 +236,7 @@ function buildPushMessage(payload) {
   const remaining = commits.length - shown.length;
 
   return [
-    `📦 <b>${escapeHtml(pushActionLabel(payload))}</b>`,
+    `📦 <b>${escapeHtml(pushActionLabel(payload, commits))}</b>`,
     `저장소: <code>${escapeHtml(repo)}</code>`,
     `브랜치: <code>${escapeHtml(branch)}</code>`,
     `푸시 사용자: ${escapeHtml(actor)}`,
@@ -305,11 +305,32 @@ function pullRequestActionLabel(action, pr) {
   return action || "-";
 }
 
-function pushActionLabel(payload) {
+function pushActionLabel(payload, commits) {
   if (payload?.deleted) return "브랜치 삭제";
   if (payload?.forced) return "강제 푸시";
+  const prNumber = mergedPullRequestNumber(commits);
+  if (prNumber) return `머지 반영 (PR #${prNumber})`;
+  if (containsMergeCommit(commits)) return "머지 반영";
   if (payload?.created) return "새 브랜치 첫 푸시";
   return "푸시";
+}
+
+function containsMergeCommit(commits) {
+  if (!Array.isArray(commits) || commits.length === 0) return false;
+  return commits.some((commit) => {
+    const line = firstLine(commit?.message || "");
+    return /^Merge pull request #\d+/i.test(line) || /^Merge branch\b/i.test(line);
+  });
+}
+
+function mergedPullRequestNumber(commits) {
+  if (!Array.isArray(commits) || commits.length === 0) return "";
+  for (const commit of commits) {
+    const line = firstLine(commit?.message || "");
+    const match = line.match(/^Merge pull request #(\d+)/i);
+    if (match) return match[1];
+  }
+  return "";
 }
 
 function shortSha(sha) {
