@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-label="Cloudflare Worker setup checklist">
+  <defs>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #3f2200; }
+      .step { font: 700 24px 'Segoe UI', Arial, sans-serif; fill: #5a3600; }
+      .text { font: 500 19px 'Segoe UI', Arial, sans-serif; fill: #6b4d20; }
+      .mono { font: 600 17px 'Consolas', 'Courier New', monospace; fill: #613200; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="840" fill="#fff8ed" rx="20"/>
+  <text x="60" y="78" class="title">Cloudflare Worker Setup (workers.dev)</text>
+
+  <rect x="60" y="120" width="1160" height="168" rx="16" fill="#fff" stroke="#f1c88f"/>
+  <text x="90" y="168" class="step">Step 1. Create API Token (minimum permissions)</text>
+  <text x="90" y="208" class="text">- Account &gt; Workers Scripts &gt; Edit</text>
+  <text x="90" y="238" class="text">- Account &gt; Account Settings &gt; Read</text>
+  <text x="90" y="268" class="text">- Copy Cloudflare Account ID from dashboard.</text>
+
+  <rect x="60" y="312" width="1160" height="190" rx="16" fill="#fff" stroke="#f1c88f"/>
+  <text x="90" y="360" class="step">Step 2. Prepare env vars and local files</text>
+  <text x="90" y="398" class="mono">npm install</text>
+  <text x="90" y="428" class="mono">cp wrangler.toml.example wrangler.toml</text>
+  <text x="90" y="458" class="mono">export CLOUDFLARE_API_TOKEN='&lt;TOKEN&gt;'</text>
+  <text x="90" y="488" class="mono">export CLOUDFLARE_ACCOUNT_ID='&lt;ACCOUNT_ID&gt;'</text>
+
+  <rect x="60" y="526" width="1160" height="250" rx="16" fill="#fff" stroke="#f1c88f"/>
+  <text x="90" y="574" class="step">Step 3. Create secrets and deploy</text>
+  <text x="90" y="612" class="mono">openssl rand -hex 32   # webhook secret</text>
+  <text x="90" y="642" class="mono">npx wrangler secret put TELEGRAM_BOT_TOKEN</text>
+  <text x="90" y="672" class="mono">npx wrangler secret put TELEGRAM_CHAT_ID</text>
+  <text x="90" y="702" class="mono">npx wrangler secret put GITHUB_WEBHOOK_SECRET</text>
+  <text x="90" y="734" class="mono">npx wrangler deploy</text>
+</svg>
