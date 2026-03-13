@@ -3,9 +3,9 @@ main = "github-global-telegram-worker.js"
 compatibility_date = "2026-03-13"
 
 [vars]
-TELEGRAM_CHAT_ID = "123456789"
 INCLUDE_EVENTS = "issues,pull_request,push"
 
 # 아래는 예시이며 실제 값은 secret으로 넣어야 합니다.
 # wrangler secret put TELEGRAM_BOT_TOKEN
+# wrangler secret put TELEGRAM_CHAT_ID
 # wrangler secret put GITHUB_WEBHOOK_SECRET
