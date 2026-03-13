@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900" role="img" aria-label="깃허브 앱 설정 체크리스트">
+  <defs>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #0f1f3c; }
+      .step { font: 700 24px 'Segoe UI', Arial, sans-serif; fill: #1d3760; }
+      .text { font: 500 19px 'Segoe UI', Arial, sans-serif; fill: #324e78; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="900" fill="#f4f7ff" rx="20"/>
+  <text x="60" y="78" class="title">GitHub App 설정 (All repositories)</text>
+
+  <rect x="60" y="120" width="1160" height="170" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="168" class="step">1단계. 기본 항목</text>
+  <text x="90" y="206" class="text">- App name: 고유한 이름 입력</text>
+  <text x="90" y="236" class="text">- Homepage URL: 저장소 URL 입력</text>
+  <text x="90" y="266" class="text">- Callback URL: 비워둠 (이 프로젝트는 콜백 미사용)</text>
+
+  <rect x="60" y="314" width="1160" height="176" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="362" class="step">2단계. Webhook 설정</text>
+  <text x="90" y="400" class="text">- Active: ON</text>
+  <text x="90" y="430" class="text">- Webhook URL: https://&lt;worker&gt;.&lt;subdomain&gt;.workers.dev</text>
+  <text x="90" y="460" class="text">- Secret: GITHUB_WEBHOOK_SECRET와 동일 값</text>
+
+  <rect x="60" y="514" width="560" height="286" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="562" class="step">3단계. Repository 권한</text>
+  <text x="90" y="602" class="text">- Metadata: Read-only (필수)</text>
+  <text x="90" y="632" class="text">- Contents: Read-only</text>
+  <text x="90" y="662" class="text">- Issues: Read-only</text>
+  <text x="90" y="692" class="text">- Pull requests: Read-only</text>
+  <text x="90" y="722" class="text">- Account/Organization: No access</text>
+
+  <rect x="660" y="514" width="560" height="286" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="690" y="562" class="step">4단계. 이벤트 + 설치 범위</text>
+  <text x="690" y="602" class="text">Subscribe to events:</text>
+  <text x="690" y="632" class="text">- Issues</text>
+  <text x="690" y="662" class="text">- Pull request</text>
+  <text x="690" y="692" class="text">- Push</text>
+  <text x="690" y="732" class="text">Install App -> 계정 선택 -> All repositories</text>
+</svg>
