@@ -152,6 +152,7 @@ Expected Telegram notifications:
 - `wrangler.toml.example`: Wrangler config template
 - `README.ko.md`: Korean setup guide
 - `docs/images/*.svg`: setup diagrams
+- `docs/images/ko/*.svg`: Korean-translated setup diagrams for `README.ko.md`
 
 ## License
 MIT
