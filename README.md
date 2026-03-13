@@ -135,48 +135,42 @@ npx wrangler deploy
 
 ## 5) Telegram 메시지 포맷 예시
 
-아래 예시는 현재 Worker 기본 포맷입니다.
+아래는 현재 Worker 기본 포맷의 "실제 수신 형태" 예시입니다.
 
 ### 5-1. 이슈 예시
-```text
-🧩 <b>이슈 생성</b>
-저장소: <code>pxzhu/GithubTelegramNotifier</code>
-번호: <code>#42</code>
-제목: README 설정 설명 보강
-작성자: pxzhu
-현재 상태: 열림
-라벨: docs, setup
-<a href="https://github.com/pxzhu/GithubTelegramNotifier/issues/42">GitHub에서 이슈 보기</a>
-```
+> 🧩 **이슈 생성**  
+> 저장소: `pxzhu/GithubTelegramNotifier`  
+> 번호: `#42`  
+> 제목: README 설정 설명 보강  
+> 작성자: pxzhu  
+> 현재 상태: 열림  
+> 라벨: docs, setup  
+> 링크: https://github.com/pxzhu/GithubTelegramNotifier/issues/42
 
 ### 5-2. PR 예시
-```text
-🔀 <b>PR 머지 완료</b>
-저장소: <code>pxzhu/GithubTelegramNotifier</code>
-번호: <code>#58</code>
-제목: README 이미지/설정 가이드 개선
-작성자: pxzhu
-브랜치: <code>readme-korean-setup → main</code>
-상태: merged
-Draft: 아니오
-변경 규모: 커밋 4개 / 파일 7개
-머지 커밋: <code>7f3a2c1</code>
-<a href="https://github.com/pxzhu/GithubTelegramNotifier/pull/58">GitHub에서 PR 보기</a>
-```
+> 🔀 **PR 머지 완료**  
+> 저장소: `pxzhu/GithubTelegramNotifier`  
+> 번호: `#58`  
+> 제목: README 이미지/설정 가이드 개선  
+> 작성자: pxzhu  
+> 브랜치: `readme-korean-setup → main`  
+> 상태: merged  
+> Draft: 아니오  
+> 변경 규모: 커밋 4개 / 파일 7개  
+> 머지 커밋: `7f3a2c1`  
+> 링크: https://github.com/pxzhu/GithubTelegramNotifier/pull/58
 
 ### 5-3. Push 예시
-```text
-📦 <b>푸시</b>
-저장소: <code>pxzhu/GithubTelegramNotifier</code>
-브랜치: <code>main</code>
-푸시 사용자: pxzhu
-커밋 수: <code>3</code>
-커밋 목록:
-1. <code>8ab12cd</code> docs: README 한글 설명 보강 <i>(pxzhu)</i>
-2. <code>91de34f</code> fix: 텔레그램 메시지 포맷 개선 <i>(pxzhu)</i>
-3. <code>72aa9bc</code> chore: 이미지 링크 정리 <i>(pxzhu)</i>
-<a href="https://github.com/pxzhu/GithubTelegramNotifier/compare/old...new">GitHub에서 변경 비교 보기</a>
-```
+> 📦 **푸시**  
+> 저장소: `pxzhu/GithubTelegramNotifier`  
+> 브랜치: `main`  
+> 푸시 사용자: pxzhu  
+> 커밋 수: `3`  
+> 커밋 목록:  
+> 1. `8ab12cd` docs: README 한글 설명 보강 (pxzhu)  
+> 2. `91de34f` fix: 텔레그램 메시지 포맷 개선 (pxzhu)  
+> 3. `72aa9bc` chore: 이미지 링크 정리 (pxzhu)  
+> 링크: https://github.com/pxzhu/GithubTelegramNotifier/compare/old...new
 
 ## 문제 해결
 - Webhook `401`: Secret 불일치
