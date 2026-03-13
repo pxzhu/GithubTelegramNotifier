@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-label="Telegram setup checklist">
+  <defs>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #12283d; }
+      .step { font: 700 24px 'Segoe UI', Arial, sans-serif; fill: #1f3e5f; }
+      .text { font: 500 19px 'Segoe UI', Arial, sans-serif; fill: #294d6b; }
+      .mono { font: 600 18px 'Consolas', 'Courier New', monospace; fill: #103a56; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="#f6fbff" rx="20"/>
+  <text x="60" y="78" class="title">Telegram Bot & Chat ID Setup</text>
+
+  <rect x="60" y="120" width="1160" height="145" rx="16" fill="#ffffff" stroke="#c7dff0"/>
+  <text x="90" y="168" class="step">Step 1. Create bot in @BotFather</text>
+  <text x="90" y="206" class="text">- Open BotFather, run /newbot, copy bot token.</text>
+  <text x="90" y="240" class="text">- Send one message to your bot (or group where bot is added).</text>
+
+  <rect x="60" y="290" width="1160" height="175" rx="16" fill="#ffffff" stroke="#c7dff0"/>
+  <text x="90" y="338" class="step">Step 2. Read chat_id with getUpdates</text>
+  <text x="90" y="378" class="mono">TOKEN='&lt;YOUR_TELEGRAM_BOT_TOKEN&gt;'</text>
+  <text x="90" y="410" class="mono">curl -s "https://api.telegram.org/bot${TOKEN}/getUpdates" | jq</text>
+  <text x="90" y="444" class="text">Find result[-1].message.chat.id (private: positive, group: usually -100...)</text>
+
+  <rect x="60" y="490" width="1160" height="200" rx="16" fill="#ffffff" stroke="#c7dff0"/>
+  <text x="90" y="538" class="step">Step 3. If result is empty</text>
+  <text x="90" y="576" class="mono">curl -s "https://api.telegram.org/bot${TOKEN}/deleteWebhook" | jq</text>
+  <text x="90" y="610" class="text">Then send one more message to bot, run getUpdates again.</text>
+  <text x="90" y="646" class="text">Use that chat_id as TELEGRAM_CHAT_ID Worker secret.</text>
+</svg>

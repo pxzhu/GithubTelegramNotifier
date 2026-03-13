@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900" role="img" aria-label="GitHub App setup checklist">
+  <defs>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #0f1f3c; }
+      .step { font: 700 24px 'Segoe UI', Arial, sans-serif; fill: #1d3760; }
+      .text { font: 500 19px 'Segoe UI', Arial, sans-serif; fill: #324e78; }
+      .mono { font: 600 17px 'Consolas', 'Courier New', monospace; fill: #173055; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="900" fill="#f4f7ff" rx="20"/>
+  <text x="60" y="78" class="title">GitHub App Setup (All repositories)</text>
+
+  <rect x="60" y="120" width="1160" height="170" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="168" class="step">Step 1. Basic fields</text>
+  <text x="90" y="206" class="text">- App name: any unique name</text>
+  <text x="90" y="236" class="text">- Homepage URL: your repository URL</text>
+  <text x="90" y="266" class="text">- Callback URL: leave empty (not needed for this webhook bridge)</text>
+
+  <rect x="60" y="314" width="1160" height="176" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="362" class="step">Step 2. Webhook settings</text>
+  <text x="90" y="400" class="text">- Active: ON</text>
+  <text x="90" y="430" class="text">- Webhook URL: https://&lt;worker-name&gt;.&lt;subdomain&gt;.workers.dev</text>
+  <text x="90" y="460" class="text">- Secret: same value as GITHUB_WEBHOOK_SECRET</text>
+
+  <rect x="60" y="514" width="560" height="286" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="90" y="562" class="step">Step 3. Repository permissions</text>
+  <text x="90" y="602" class="text">- Metadata: Read-only (mandatory)</text>
+  <text x="90" y="632" class="text">- Contents: Read-only</text>
+  <text x="90" y="662" class="text">- Issues: Read-only</text>
+  <text x="90" y="692" class="text">- Pull requests: Read-only</text>
+  <text x="90" y="722" class="text">- Account/Organization permissions: No access</text>
+
+  <rect x="660" y="514" width="560" height="286" rx="16" fill="#fff" stroke="#cdd9ff"/>
+  <text x="690" y="562" class="step">Step 4. Events + install</text>
+  <text x="690" y="602" class="text">Subscribe events:</text>
+  <text x="690" y="632" class="text">- Issues</text>
+  <text x="690" y="662" class="text">- Pull request</text>
+  <text x="690" y="692" class="text">- Push</text>
+  <text x="690" y="732" class="text">Install App -> Account -> All repositories</text>
+</svg>
