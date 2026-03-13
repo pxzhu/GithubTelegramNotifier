@@ -131,15 +131,34 @@ function buildIssueMessage(payload) {
 
   const repo = payload?.repository?.full_name || "-";
   const actor = payload?.sender?.login || "-";
+  const labels = Array.isArray(issue.labels) && issue.labels.length
+    ? issue.labels
+        .map((label) =>
+          typeof label === "string" ? label : label?.name || ""
+        )
+        .filter(Boolean)
+        .join(", ")
+    : "없음";
+  const stateText = issue.state === "open"
+    ? "열림"
+    : issue.state === "closed"
+      ? "닫힘"
+      : issue.state || "-";
 
-  const title = `<b>Issue ${escapeHtml(action.toUpperCase())}</b>`;
   return [
-    title,
+    `🧩 <b>이슈 ${escapeHtml(issueActionLabel(action))}</b>`,
     `저장소: <code>${escapeHtml(repo)}</code>`,
-    `#${issue.number} ${escapeHtml(issue.title || "")}`,
-    `작성/수정자: ${escapeHtml(actor)}`,
-    `<a href="${escapeHtml(issue.html_url || "")}">이슈 보기</a>`,
-  ].join("\n\n");
+    `번호: <code>#${issue.number}</code>`,
+    `제목: ${escapeHtml(issue.title || "(제목 없음)")}`,
+    `작성자: ${escapeHtml(actor)}`,
+    `현재 상태: ${escapeHtml(stateText)}`,
+    `라벨: ${escapeHtml(labels)}`,
+    issue.html_url
+      ? `<a href="${escapeHtml(issue.html_url)}">GitHub에서 이슈 보기</a>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 function buildPullRequestMessage(payload) {
@@ -159,19 +178,38 @@ function buildPullRequestMessage(payload) {
 
   const repo = payload?.repository?.full_name || "-";
   const actor = payload?.sender?.login || "-";
-  const prState = pr.merged ? "MERGED" : action.toUpperCase();
-  const mergeInfo = pr.merged
-    ? `머지 커밋: <code>${escapeHtml(pr.merge_commit_sha || "-")}</code>`
-    : `상태: ${escapeHtml(pr.state || "-")}`;
+  const head = pr.head?.ref || "-";
+  const base = pr.base?.ref || "-";
+  const stateText = pr.merged ? "merged" : pr.state || "-";
+  const draftText = pr.draft ? "예" : "아니오";
+  const commitCount =
+    typeof pr.commits === "number" ? `${pr.commits}` : "-";
+  const fileCount =
+    typeof pr.changed_files === "number" ? `${pr.changed_files}` : "-";
+  const requestedReviewer = payload?.requested_reviewer?.login || "";
 
   return [
-    `<b>PR ${escapeHtml(prState)}</b>`,
+    `🔀 <b>PR ${escapeHtml(pullRequestActionLabel(action, pr))}</b>`,
     `저장소: <code>${escapeHtml(repo)}</code>`,
-    `#${pr.number} ${escapeHtml(pr.title || "")}`,
-    `작성/수정자: ${escapeHtml(actor)}`,
-    mergeInfo,
-    `<a href="${escapeHtml(pr.html_url || "")}">PR 보기</a>`,
-  ].join("\n\n");
+    `번호: <code>#${pr.number}</code>`,
+    `제목: ${escapeHtml(pr.title || "(제목 없음)")}`,
+    `작성자: ${escapeHtml(actor)}`,
+    `브랜치: <code>${escapeHtml(head)} → ${escapeHtml(base)}</code>`,
+    `상태: ${escapeHtml(stateText)}`,
+    `Draft: ${escapeHtml(draftText)}`,
+    `변경 규모: 커밋 ${escapeHtml(commitCount)}개 / 파일 ${escapeHtml(fileCount)}개`,
+    action === "review_requested" && requestedReviewer
+      ? `요청된 리뷰어: ${escapeHtml(requestedReviewer)}`
+      : "",
+    pr.merged && pr.merge_commit_sha
+      ? `머지 커밋: <code>${escapeHtml(shortSha(pr.merge_commit_sha))}</code>`
+      : "",
+    pr.html_url
+      ? `<a href="${escapeHtml(pr.html_url)}">GitHub에서 PR 보기</a>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 function buildPushMessage(payload) {
@@ -186,30 +224,32 @@ function buildPushMessage(payload) {
 
   const lines = shown.length
     ? shown
-        .map((c) => {
-          const sha = (c.id || "").slice(0, 7);
+        .map((c, index) => {
+          const sha = shortSha(c.id || "");
           const msg = cut(firstLine(c.message || ""), 90);
           const author = c.author?.name || "-";
-          return `- <code>${escapeHtml(sha)}</code> ${escapeHtml(msg)} (${escapeHtml(author)})`;
+          return `${index + 1}. <code>${escapeHtml(sha)}</code> ${escapeHtml(msg)} <i>(${escapeHtml(author)})</i>`;
         })
         .join("\n")
-    : "- 커밋 정보 없음";
+    : "없음";
 
   const remaining = commits.length - shown.length;
 
   return [
-    `<b>Push on ${escapeHtml(branch)}</b>`,
+    `📦 <b>${escapeHtml(pushActionLabel(payload))}</b>`,
     `저장소: <code>${escapeHtml(repo)}</code>`,
+    `브랜치: <code>${escapeHtml(branch)}</code>`,
     `푸시 사용자: ${escapeHtml(actor)}`,
-    `커밋 수: ${commits.length}`,
+    `커밋 수: <code>${commits.length}</code>`,
+    "커밋 목록:",
     lines,
-    remaining > 0 ? `…외 ${remaining}개 커밋` : "",
+    remaining > 0 ? `외 ${remaining}개 커밋 더 있음` : "",
     payload?.compare
-      ? `<a href="${escapeHtml(payload.compare)}">비교 보기</a>`
+      ? `<a href="${escapeHtml(payload.compare)}">GitHub에서 변경 비교 보기</a>`
       : "",
   ]
     .filter(Boolean)
-    .join("\n\n");
+    .join("\n");
 }
 
 async function sendTelegram(message, env) {
@@ -245,6 +285,35 @@ function firstLine(text) {
 function cut(text, max) {
   const s = String(text || "");
   return s.length > max ? `${s.slice(0, max - 1)}…` : s;
+}
+
+function issueActionLabel(action) {
+  if (action === "opened") return "생성";
+  if (action === "edited") return "수정";
+  if (action === "closed") return "종료";
+  if (action === "reopened") return "재오픈";
+  return action || "-";
+}
+
+function pullRequestActionLabel(action, pr) {
+  if (action === "opened") return "생성";
+  if (action === "reopened") return "재오픈";
+  if (action === "synchronize") return "커밋 업데이트";
+  if (action === "ready_for_review") return "리뷰 준비 완료";
+  if (action === "review_requested") return "리뷰 요청";
+  if (action === "closed") return pr?.merged ? "머지 완료" : "종료";
+  return action || "-";
+}
+
+function pushActionLabel(payload) {
+  if (payload?.deleted) return "브랜치 삭제";
+  if (payload?.forced) return "강제 푸시";
+  if (payload?.created) return "새 브랜치 첫 푸시";
+  return "푸시";
+}
+
+function shortSha(sha) {
+  return String(sha || "").slice(0, 7);
 }
 
 function escapeHtml(input) {
