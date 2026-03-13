@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="520" viewBox="0 0 1280 520" role="img" aria-label="알림 검증 플로우">
+  <defs>
+    <style>
+      .title { font: 700 32px 'Segoe UI', Arial, sans-serif; fill: #0d2a3f; }
+      .text { font: 600 20px 'Segoe UI', Arial, sans-serif; fill: #1f4560; }
+      .small { font: 500 18px 'Segoe UI', Arial, sans-serif; fill: #3e627b; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0ea5a5" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="520" fill="#f2fffc" rx="20"/>
+  <text x="60" y="72" class="title">종단 간 알림 검증 플로우</text>
+
+  <rect x="70" y="140" width="230" height="220" rx="16" fill="#fff" stroke="#b5ebe1"/>
+  <text x="98" y="200" class="text">1) 이슈 생성</text>
+  <text x="98" y="236" class="small">기대: Issue opened</text>
+
+  <rect x="350" y="140" width="230" height="220" rx="16" fill="#fff" stroke="#b5ebe1"/>
+  <text x="378" y="200" class="text">2) 커밋 푸시</text>
+  <text x="378" y="236" class="small">기대: Push 이벤트</text>
+
+  <rect x="630" y="140" width="230" height="220" rx="16" fill="#fff" stroke="#b5ebe1"/>
+  <text x="660" y="200" class="text">3) PR 생성</text>
+  <text x="660" y="236" class="small">기대: PR opened</text>
+
+  <rect x="910" y="140" width="300" height="220" rx="16" fill="#fff" stroke="#b5ebe1"/>
+  <text x="942" y="200" class="text">4) PR 머지</text>
+  <text x="942" y="236" class="small">기대: PR merged + Push</text>
+
+  <line x1="300" y1="250" x2="350" y2="250" stroke="#0ea5a5" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="580" y1="250" x2="630" y2="250" stroke="#0ea5a5" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="860" y1="250" x2="910" y2="250" stroke="#0ea5a5" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <text x="60" y="450" class="small">Webhook Delivery가 200이 아닐 때:</text>
+  <text x="60" y="482" class="small">401=Secret 불일치, 404=URL 오입력, 500=Worker 오류 또는 Secret 누락</text>
+</svg>
