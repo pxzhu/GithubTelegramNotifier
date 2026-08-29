@@ -1,0 +1,41 @@
+{
+  "$schema": "./manifest.schema.json",
+  "schema_version": 1,
+  "id": "anthropic.claude-code",
+  "name": "Claude Code",
+  "provider_type": "CLI_PROVIDER",
+  "adapter_version": "0.1.0",
+  "binary_candidates": ["claude", "claude.exe"],
+  "supported_os": ["macos", "windows", "linux"],
+  "capabilities": [
+    "coding",
+    "reasoning",
+    "file_access",
+    "shell",
+    "git",
+    "tool_calling",
+    "vision",
+    "long_context",
+    "parallel_agents",
+    "session_resume"
+  ],
+  "auth_strategy": "INHERIT_CLI_SESSION",
+  "install_strategy": "VENDOR_NATIVE",
+  "update_strategy": "VENDOR_OR_PACKAGE_MANAGER",
+  "usage_strategy": "EVENT_STREAM",
+  "minimum_version": null,
+  "tested_through": null,
+  "models": [
+    {
+      "id": "dynamic",
+      "display_name": "Models reported by Claude Code",
+      "discovery": "DYNAMIC",
+      "capabilities": ["coding", "reasoning"]
+    }
+  ],
+  "metadata": {
+    "auth_status_command": ["auth", "status"],
+    "credential_access": "forbidden",
+    "event_format": "stream-json"
+  }
+}

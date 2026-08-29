@@ -1,0 +1,36 @@
+[package]
+name = "harness-desktop"
+version = "0.1.0"
+description = "Local-first multi-agent desktop harness"
+authors = ["Harness contributors"]
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "harness_core"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[[bin]]
+name = "harness-desktop"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+regex = "1"
+rusqlite = { version = "0.32", features = ["bundled", "chrono", "uuid"] }
+semver = { version = "1", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+sysinfo = "0.33"
+tauri = { version = "2", features = [] }
+thiserror = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+wait-timeout = "0.2"
+
+[dev-dependencies]
+tempfile = "3"
