@@ -1,0 +1,31 @@
+{
+  "$schema": "./manifest.schema.json",
+  "schema_version": 1,
+  "id": "local.managed-llamacpp",
+  "name": "Managed Local Runtime",
+  "provider_type": "LOCAL_RUNTIME_PROVIDER",
+  "adapter_version": "0.1.0",
+  "binary_candidates": [],
+  "supported_os": ["macos", "windows"],
+  "capabilities": ["reasoning", "local", "offline", "cheap", "fast"],
+  "auth_strategy": "NONE",
+  "install_strategy": "APP_MANAGED",
+  "update_strategy": "SIGNED_APP_MANAGED",
+  "usage_strategy": "LOCAL_RUNTIME_METRICS",
+  "minimum_version": null,
+  "tested_through": null,
+  "models": [
+    {
+      "id": "catalog-selected",
+      "display_name": "Hardware-selected GGUF model",
+      "discovery": "DYNAMIC",
+      "capabilities": ["reasoning", "local", "offline"]
+    }
+  ],
+  "metadata": {
+    "catalog_must_be_signed": true,
+    "artifacts_require_sha256": true,
+    "license_acceptance_required": true,
+    "automatic_model_download": false
+  }
+}

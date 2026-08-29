@@ -1,0 +1,52 @@
+name: Harness Desktop
+
+on:
+  pull_request:
+    paths:
+      - "harness-desktop/**"
+      - ".github/workflows/harness-desktop.yml"
+  push:
+    branches: [main]
+    paths:
+      - "harness-desktop/**"
+      - ".github/workflows/harness-desktop.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: harness-desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: harness-desktop/package-lock.json
+      - run: npm ci
+      - run: npm run check
+
+  rust:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: harness-desktop/src-tauri
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: harness-desktop/src-tauri
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --all-targets --all-features -- -D warnings
+      - run: cargo test --all-features

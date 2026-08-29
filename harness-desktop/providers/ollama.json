@@ -1,0 +1,29 @@
+{
+  "$schema": "./manifest.schema.json",
+  "schema_version": 1,
+  "id": "local.ollama",
+  "name": "Ollama",
+  "provider_type": "LOCAL_RUNTIME_PROVIDER",
+  "adapter_version": "0.1.0",
+  "binary_candidates": ["ollama", "ollama.exe"],
+  "supported_os": ["macos", "windows", "linux"],
+  "capabilities": ["reasoning", "local", "offline", "cheap", "fast"],
+  "auth_strategy": "NONE",
+  "install_strategy": "EXTERNAL",
+  "update_strategy": "NOTIFY_ONLY",
+  "usage_strategy": "LOCAL_RUNTIME_METRICS",
+  "minimum_version": null,
+  "tested_through": null,
+  "models": [
+    {
+      "id": "dynamic",
+      "display_name": "Locally installed Ollama models",
+      "discovery": "DYNAMIC",
+      "capabilities": ["reasoning", "local"]
+    }
+  ],
+  "metadata": {
+    "default_endpoint": "http://127.0.0.1:11434",
+    "remote_endpoints_require_explicit_approval": true
+  }
+}
